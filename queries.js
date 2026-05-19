@@ -27,15 +27,16 @@ const getTaskById = async (request, response) => {
 }
 
 const createTask = async (request, response) => {
-  const { title, description, priority, status, due_date, category } = request.body
-  try {
-    await pool.query(
-      'INSERT INTO tasks (title, description, priority, status, due_date, category) VALUES ($1, $2, $3, $4, $5, $6)',
-      [title, description, priority, status, due_date, category]
-    )
-    response.status(201).send('Task created')
-  } catch (error) { throw error }
-}
+    const { title, description, priority, status, due_date, category } = request.body
+    const dueDateValue = due_date === '' ? null : due_date
+    try {
+      await pool.query(
+        'INSERT INTO tasks (title, description, priority, status, due_date, category) VALUES ($1, $2, $3, $4, $5, $6)',
+        [title, description, priority, status, dueDateValue, category]
+      )
+      response.status(201).send('Task created')
+    } catch (error) { throw error }
+  }
 
 const updateTask = async (request, response) => {
   const id = parseInt(request.params.id, 10)
