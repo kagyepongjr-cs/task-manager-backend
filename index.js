@@ -19,6 +19,10 @@ app.post('/tasks', db.createTask)
 app.put('/tasks/:id', db.updateTask)
 app.delete('/tasks/:id', db.deleteTask)
 
+app.get('/health', (request, response) => {
+    response.json({ status: 'ok', message: 'CrowdStrike Task Manager API is running' })
+  })  
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
